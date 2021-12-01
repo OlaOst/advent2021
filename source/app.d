@@ -14,7 +14,7 @@ unittest
 }
 auto day1part1(int[] input)
 {
-  return input.zip(input[1..$]).count!(i => i[0] < i[1]);
+  return input.zip(input[1..$]).count!"a[0]<a[1]";
 }
 
 unittest
@@ -24,6 +24,6 @@ unittest
 }
 auto day1part2(int[] input)
 {
-  auto windows = input.slide(3).map!(w => w.sum).array;
+  auto windows = input.slide(3).map!"a.sum".array;
   return windows.day1part1;
 }
