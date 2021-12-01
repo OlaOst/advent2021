@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/advent2021
+advent2021.so
+advent2021.dylib
+advent2021.dll
+advent2021.a
+advent2021.lib
+advent2021-test-*
+*.exe
+*.o
+*.obj
+*.lst

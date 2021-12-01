@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"ola"
+	],
+	"copyright": "Copyright © 2021, ola",
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "advent2021"
+}
