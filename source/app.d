@@ -3,8 +3,9 @@ import std;
 
 void main()
 {
-	"day1input.txt".File.byLine.map!(line => line.to!int).array.day1part1.writeln;
-  "day1input.txt".File.byLine.map!(line => line.to!int).array.day1part2.writeln;
+	auto day1input = "day1input.txt".File.byLine.map!"a.to!int".array;
+  day1input.day1part1.writeln;
+  day1input.day1part2.writeln;
 }
 
 unittest
