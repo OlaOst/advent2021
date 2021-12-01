@@ -25,5 +25,5 @@ unittest
 }
 auto day1part2(Range)(Range input)
 {
-  return input.slide(3).map!"a.sum".day1part1;
+  return input.slide(3).map!sum.day1part1;
 }
