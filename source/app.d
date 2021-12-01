@@ -3,7 +3,7 @@ import std;
 
 void main()
 {
-	auto day1input = "day1input.txt".File.byLine.map!"a.to!int".array;
+	auto day1input = "day1input.txt".slurp!int("%s").array;
   day1input.day1part1.writeln;
   day1input.day1part2.writeln;
 }
