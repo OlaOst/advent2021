@@ -14,7 +14,7 @@ unittest
 }
 auto day1part1(int[] input)
 {
-  return input.zip(input[1..$]).count!"a[0]<a[1]";
+  return input.slide(2).count!"a[0]<a[1]";
 }
 
 unittest
