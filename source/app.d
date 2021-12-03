@@ -10,6 +10,9 @@ void main()
   auto day2input = "day2input.txt".slurp!(string, int)("%s %s").array;
   day2input.day2part1.writeln;
   day2input.day2part2.writeln;
+  
+  auto day3input = "day3input.txt".readText.parseday3input;
+  day3input.day3part1.writeln;
 }
 
 unittest
@@ -96,4 +99,50 @@ auto day2part2(Range)(Range input)
   }    
       
   return horizontal * depth;
+}
+
+unittest
+{
+  auto text = "00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010";
+
+  auto input = text.split("\n").map!(line => line.map!(c => [c].to!int).array).array;
+  assert(input.day3part1 == 198);
+}
+auto parseday3input(string text)
+{
+  return text.split("\n").map!(line => line.map!(c => [c].to!int).array).array; 
+}
+
+auto day3part1(Range)(Range input)
+{
+  auto flipped = input.transposed.map!(line => line.array).array;
+  
+  auto gamma = 0;
+  auto epsilon = 0;
+  
+  auto bitSums = flipped.map!sum.array;
+  
+  foreach (size_t bitPos, int bitCount; bitSums)
+  {
+    // no lines should have equal number of 0 and 1 bits
+    enforce(bitCount != input.length / 2);
+    
+    if (bitCount > (input.length / 2))
+      gamma += 2 ^^ ((bitSums.length-1) - bitPos);
+    if (bitCount < (input.length / 2))
+      epsilon += 2 ^^ ((bitSums.length-1) - bitPos);
+  }
+  
+  return gamma * epsilon;
 }
