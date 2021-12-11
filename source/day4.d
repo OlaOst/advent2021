@@ -97,8 +97,8 @@ long day4part1(Range)(Range input)
       
       if (board.dup.any!(line => line.all!(number => number < 0)) || board.dup.transposed.any!(line => line.all!(number => number < 0)))
       {
-        writeln("found winning board: ");
-        board.each!writeln;
+        //writeln("found winning board: ");
+        //board.each!writeln;
         
         auto boardSum = board.join.filter!(number => number >= 0).sum;
         return boardSum * drawNumber;
@@ -158,8 +158,8 @@ long day4part2(Range)(Range input)
         
         if (wonBoards.length == boards.length || wonBoards.length == drawNumbers.length)
         {
-          writeln("found last winning board: ");
-          board.each!writeln;
+          //writeln("found last winning board: ");
+          //board.each!writeln;
           
           auto boardSum = board.join.filter!(number => number >= 0).sum;
           return boardSum * drawNumber;
