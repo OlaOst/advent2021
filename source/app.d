@@ -31,4 +31,5 @@ void main()
   import day6;
   auto day6input = "day6input.txt".readText.parseday6input;
   day6input.day6part1.writeln;
+  day6input.day6part1(256).writeln;
 }
