@@ -106,5 +106,67 @@ long day4part1(Range)(Range input)
     }
   }
   
-  return -1;
+  assert(0);
+}
+
+unittest
+{
+  string input = "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+
+22 13 17 11  0
+ 8  2 23  4 24
+21  9 14 16  7
+ 6 10  3 18  5
+ 1 12 20 15 19
+
+ 3 15  0  2 22
+ 9 18 13 17  5
+19  8  7 25 23
+20 11 10 24  4
+14 21 16 12  6
+
+14 21 17 24  4
+10 16 15  9 19
+18  8 23 26 20
+22 11 13  6  5
+ 2  0 12  3  7";
+ 
+  auto parsed = input.parseday4input;
+  auto result = parsed.day4part2;
+  assert(result == 1924, "Expected 1924, got " ~ result.to!string);
+}
+long day4part2(Range)(Range input)
+{
+  auto drawNumbers = input[0];
+  auto boards = input[1];
+  
+  bool[size_t] wonBoards;
+  foreach (drawNumber; drawNumbers)
+  {  
+    foreach (boardIndex, ref board; boards)
+    {
+      foreach (lineIndex, line; board)
+      foreach (numberIndex, number; line)
+      {
+        if (number == drawNumber)
+          boards[boardIndex][lineIndex][numberIndex] = -1;
+      }
+      
+      if (boardIndex !in wonBoards && (board.dup.any!(line => line.all!(number => number < 0)) || board.dup.transposed.any!(line => line.all!(number => number < 0))))
+      {
+        wonBoards[boardIndex] = true;
+        
+        if (wonBoards.length == boards.length || wonBoards.length == drawNumbers.length)
+        {
+          writeln("found last winning board: ");
+          board.each!writeln;
+          
+          auto boardSum = board.join.filter!(number => number >= 0).sum;
+          return boardSum * drawNumber;
+        } // foreach number
+      } // foreach line
+    } // foreach boards
+  } // foreach drawNumber
+  
+  assert(0);
 }
