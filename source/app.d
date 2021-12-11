@@ -22,4 +22,8 @@ void main()
   auto day4input = "day4input.txt".readText.parseday4input;
   //day4input.day4part1.writeln;
   day4input.day4part2.writeln;
+  
+  import day5;
+  auto day5input = "day5input.txt".readText.parseday5input;
+  day5input.day5part1.writeln;
 }
