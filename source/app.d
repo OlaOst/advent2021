@@ -25,5 +25,6 @@ void main()
   
   import day5;
   auto day5input = "day5input.txt".readText.parseday5input;
-  day5input.day5part1.writeln;
+  //day5input.day5part1.writeln;
+  day5input.day5part2.writeln;
 }

@@ -85,3 +85,103 @@ auto day5part1(Range)(Range segments)
   
   return grid.join.count!(n => n > 1);
 }
+
+unittest
+{
+  auto input = "0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2";
+
+  auto result = input.parseday5input.day5part2;
+  assert(result == 12, "Expected 12, got " ~ result.to!string);
+}
+auto day5part2(Range)(Range segments)
+{
+  //segments.each!writeln;
+  
+  auto minX = segments.map!(segment => segment.map!(coord => coord[0])).join.minElement;
+  auto maxX = segments.map!(segment => segment.map!(coord => coord[0])).join.maxElement;
+  auto minY = segments.map!(segment => segment.map!(coord => coord[1])).join.minElement;
+  auto maxY = segments.map!(segment => segment.map!(coord => coord[1])).join.maxElement;
+  
+  //writeln("min/max coords: ", [minX,minY], " -> ", [maxX,maxY]);
+  
+  assert(minX < maxX);
+  assert(minY < maxY);
+  
+  auto grid = new int[][](maxY+1, maxX+1);
+  
+  foreach (segment; segments)
+  {
+    //writeln("checking segment ", segment[0], " -> ", segment[1]);
+  
+    // vertical line
+    if (segment[0][0] == segment[1][0])
+    {
+      auto x = segment[0][0];
+      auto startY = min(segment[0][1], segment[1][1]);
+      auto endY = max(segment[0][1], segment[1][1]);
+      for (int y = startY; y <= endY; y++)
+        grid[y][x]++;
+    }
+    // horizontal line
+    else if (segment[0][1] == segment[1][1])
+    {
+      auto y = segment[0][1];
+      auto startX = min(segment[0][0], segment[1][0]);
+      auto endX = max(segment[0][0], segment[1][0]);
+      for (int x = startX; x <= endX; x++)
+        grid[y][x]++;
+    }
+    // diagonal line
+    else
+    {
+      auto startX = min(segment[0][0], segment[1][0]);
+      auto endX = max(segment[0][0], segment[1][0]);
+      auto startY = min(segment[0][1], segment[1][1]);
+      auto endY = max(segment[0][1], segment[1][1]);
+      
+      if (segment[0][0] < segment[1][0])
+      {
+        startX = segment[0][0];
+        endX = segment[1][0];
+        startY = segment[0][1];
+        endY = segment[1][1];
+      }
+      else
+      {
+        startX = segment[1][0];
+        endX = segment[0][0];
+        startY = segment[1][1];
+        endY = segment[0][1];
+      }
+      
+      //writeln("diagonal segment ", segment[0], " -> ", segment[1]);
+      
+      auto direction = (startY < endY) ? 1 : -1;
+      
+      //writeln("fixed segment ", [startX,startY], " -> ", [endX,endY], ", y direction ", direction);
+      
+      auto y = startY;
+      for (int x = startX; x <= endX; x++)
+      {
+        //writeln("x ", x, ", y ", y);
+        grid[y][x]++;
+        y += direction;
+      }
+      
+      //grid.each!writeln;
+    }
+  }
+  
+  //grid.each!writeln;
+  
+  return grid.join.count!(n => n > 1);
+}
